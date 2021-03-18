@@ -31,4 +31,9 @@ public class Customer {
 		this.identificacao = identificacao;
 	}
 
+	@Override
+	public String toString() {
+		return "Customer [nome=" + nome + ", identificacao=" + identificacao + "]";
+	}
+
 }
