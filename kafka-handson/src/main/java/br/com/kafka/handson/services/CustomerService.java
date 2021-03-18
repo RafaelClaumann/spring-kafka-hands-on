@@ -1,9 +1,12 @@
 package br.com.kafka.handson.services;
 
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
 import br.com.kafka.handson.models.Customer;
@@ -27,18 +30,33 @@ public class CustomerService {
 		this.producerVipCustomerTemplate = producerVipCustomerTemplate;
 	}
 
-	public void produceBaseCustomer() {
+	public ResponseEntity<String> produceBaseCustomer() {
 		Customer customer = new Customer("RafaelBaseCustomer", String.valueOf(random.nextInt(10)));
 
-		// send(topic, key, message)
-		producerCustomerTemplate.send(createdCustomerTopic, customer.getIdentificacao(), customer);
+		try {
+			// .get() espera pela resposta do broker, similar a um await do javascript.
+			SendResult<String, Customer> result = producerCustomerTemplate
+					.send(createdCustomerTopic, customer.getIdentificacao(), customer).get();
+
+			return ResponseEntity.accepted().body(result.toString());
+		} catch (InterruptedException | ExecutionException e) {
+			return ResponseEntity.unprocessableEntity().build();
+		}
 	}
 
-	public void produceVipCustomer() {
+	public ResponseEntity<String> produceVipCustomer() {
 		VipCustomer vipCustomer = new VipCustomer("RafaelVipCustomer", String.valueOf(random.nextInt(10)),
 				String.valueOf(random.nextInt(100)));
 
-		producerVipCustomerTemplate.send(createdCustomerTopic, vipCustomer.getIdentificacao(), vipCustomer);
+		try {
+			// .get() espera pela resposta do broker, similar a um await do javascript.
+			SendResult<String, VipCustomer> result = producerVipCustomerTemplate
+					.send(createdCustomerTopic, vipCustomer.getIdentificacao(), vipCustomer).get();
+			
+			return ResponseEntity.accepted().body(result.toString());
+		} catch (InterruptedException | ExecutionException e) {
+			return ResponseEntity.unprocessableEntity().build();
+		}
 	}
 
 }
