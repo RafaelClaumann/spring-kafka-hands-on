@@ -16,9 +16,14 @@ public class CustomerController {
 		this.customerService = customerService;
 	}
 
-	@GetMapping
-	public void produce() {
-		customerService.produce();
+	@GetMapping("/base-customer")
+	public void produceBaseCustomer() {
+		customerService.produceBaseCustomer();
+	}
+
+	@GetMapping("/vip-customer")
+	public void produceVipCustomer() {
+		customerService.produceVipCustomer();
 	}
 
 }
