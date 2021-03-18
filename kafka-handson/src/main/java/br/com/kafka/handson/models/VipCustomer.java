@@ -5,6 +5,10 @@ public class VipCustomer extends BaseCustomer {
 	private String vipId;
 	private Boolean isVip;
 
+	public VipCustomer() {
+
+	}
+
 	public VipCustomer(String nome, String identificacao, String vipId) {
 		super(nome, identificacao);
 		this.vipId = vipId;
