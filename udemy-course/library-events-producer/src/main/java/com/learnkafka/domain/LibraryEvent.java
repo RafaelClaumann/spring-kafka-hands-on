@@ -16,5 +16,6 @@ public class LibraryEvent implements Serializable {
 
     private Integer libraryEventId;
     private Book book;
+    private LibraryEventType eventType;
 
 }
