@@ -12,7 +12,7 @@ public class AutoCreateConfig {
 
     @Bean
     public NewTopic libraryEvents() {
-        return TopicBuilder.name("library-event")
+        return TopicBuilder.name("library-events")
                 .partitions(3)
                 .replicas(1) // (1) porque tem só um broker na maquina
                 .build();
