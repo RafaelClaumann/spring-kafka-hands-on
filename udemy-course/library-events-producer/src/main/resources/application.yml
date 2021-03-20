@@ -1,3 +1,6 @@
+server:
+  port: 8083
+
 spring:
   profiles:
     active: local
@@ -9,6 +12,9 @@ spring:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    admin:
+      properties:
+        bootstrap.servers: localhost:9092
 
 # exemplo de uso, profile para desenvolvimento
 ---
