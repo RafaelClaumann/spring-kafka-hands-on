@@ -10,6 +10,8 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 
+import java.util.concurrent.ExecutionException;
+
 @Component
 @Slf4j
 public class LibraryEventProducer {
@@ -30,6 +32,20 @@ public class LibraryEventProducer {
         }, failure -> {
             handleFailure(key, value, failure);
         });
+    }
+
+    public void sendLibraryEventSynchronous(LibraryEvent libraryEvent) throws JsonProcessingException {
+        Integer key = libraryEvent.getLibraryEventId();
+        String value = objectMapper.writeValueAsString(libraryEvent);
+
+        try {
+            // will wait until the ListenableFuture return Successfully or Failure
+            kafkaTemplate.sendDefault(key, value).get();
+        } catch (InterruptedException | ExecutionException ex) {
+            log.error("InterruptedException/ExecutionException sending the message and the exception is {}", ex.getMessage());
+        } catch (Exception ex) {
+            log.error("Exception sending the message and the exception is {}", ex.getMessage());
+        }
     }
 
     private void handleSuccess(Integer key, String value, SendResult<Integer, String> result) {
