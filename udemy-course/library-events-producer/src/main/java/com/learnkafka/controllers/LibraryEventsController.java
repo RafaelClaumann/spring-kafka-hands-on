@@ -1,6 +1,5 @@
 package com.learnkafka.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.learnkafka.domain.LibraryEvent;
 import com.learnkafka.producer.LibraryEventProducer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class LibraryEventsController {
     @PostMapping("/v1/library-event")
     public ResponseEntity<LibraryEvent> postEvent(@RequestBody LibraryEvent libraryEvent) throws Exception {
 
-        libraryEventProducer.sendLibraryEvent(libraryEvent);
+        libraryEventProducer.sendLibraryEventWithTopicName(libraryEvent);
         return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
     }
 
