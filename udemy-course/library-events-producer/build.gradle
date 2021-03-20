@@ -26,6 +26,7 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	testImplementation 'org.scala-lang:scala-library:2.12.11'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 }
 
