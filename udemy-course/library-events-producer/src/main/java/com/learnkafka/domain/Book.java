@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class Book implements Serializable {
     private static final long serialVersionUID = -1130026173351245203L;
 
-    private Integer bookID;
+    private Integer bookId;
     private String bookName;
     private String bookAuthor;
 
